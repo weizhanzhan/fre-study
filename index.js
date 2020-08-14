@@ -1,10 +1,12 @@
 import { render, html as h, useState } from './src'
+import { h1 } from './src_mine/h'
+
 
 function counter() {
   const state = useState({
     count: 0
   },this)
-  
+  h1`<${count} count=${state.count} />`
   return h`
     <div>
       ${h`<${count} count=${state.count} />`}

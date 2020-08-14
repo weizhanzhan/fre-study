@@ -10,11 +10,13 @@ export default function html(statics) {
 }
 
 function build(statics) {
+  console.log('statics', statics)
   let str = statics[0],
     i = 1
   while (i < statics.length) {
     str += '$_h[' + i + ']' + statics[i++]
   }
+  console.log('str', str)
   TEMPLATE.innerHTML = str
     .replace(/<(?:(\/)\/|(\/?)(\$_h\[\d+\]))/g, '<$1$2c c@=$3')
     .replace(/<([\w:-]+)(?:\s[^<>]*?)?(\/?)>/g,(str, name, a) => str.replace(/(?:'.*?'|".*?"|([A-Z]))/g, (s, c) => (c ? ':::' + c : s)) + (a ? '</' + name + '>' : ''))

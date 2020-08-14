@@ -414,6 +414,7 @@ function html(statics) {
 }
 
 function build(statics) {
+  console.log('statics', statics);
   var str = statics[0],
       i = 1;
 
@@ -421,6 +422,7 @@ function build(statics) {
     str += '$_h[' + i + ']' + statics[i++];
   }
 
+  console.log('str', str);
   TEMPLATE.innerHTML = str.replace(/<(?:(\/)\/|(\/?)(\$_h\[\d+\]))/g, '<$1$2c c@=$3').replace(/<([\w:-]+)(?:\s[^<>]*?)?(\/?)>/g, function (str, name, a) {
     return str.replace(/(?:'.*?'|".*?"|([A-Z]))/g, function (s, c) {
       return c ? ':::' + c : s;
@@ -543,13 +545,34 @@ var _render = require("./render");
 
 var render = _render.mount;
 exports.render = render;
-},{"./hooks":"src/hooks.js","./h":"src/h.js","./render":"src/render.js"}],"index.js":[function(require,module,exports) {
+},{"./hooks":"src/hooks.js","./h":"src/h.js","./render":"src/render.js"}],"src_mine/h.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.h1 = h1;
+
+function h1(type) {}
+},{}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _src = require("./src");
 
-function _templateObject4() {
+var _h = require("./src_mine/h");
+
+function _templateObject5() {
   var data = _taggedTemplateLiteral(["<", " />"]);
+
+  _templateObject5 = function _templateObject5() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject4() {
+  var data = _taggedTemplateLiteral(["\n    <div>\n      <p>", "</p>\n      <p>", "</p>\n      <button onclick=", ">x</button>\n    </div>\n  "]);
 
   _templateObject4 = function _templateObject4() {
     return data;
@@ -559,7 +582,7 @@ function _templateObject4() {
 }
 
 function _templateObject3() {
-  var data = _taggedTemplateLiteral(["\n    <div>\n      <p>", "</p>\n      <p>", "</p>\n      <button onclick=", ">x</button>\n    </div>\n  "]);
+  var data = _taggedTemplateLiteral(["<", " count=", " />"]);
 
   _templateObject3 = function _templateObject3() {
     return data;
@@ -569,7 +592,7 @@ function _templateObject3() {
 }
 
 function _templateObject2() {
-  var data = _taggedTemplateLiteral(["<", " count=", " />"]);
+  var data = _taggedTemplateLiteral(["\n    <div>\n      ", "\n      <button onclick=", ">+</button>\n      <button onclick=", ">-</button>\n    </div> \n  "]);
 
   _templateObject2 = function _templateObject2() {
     return data;
@@ -579,7 +602,7 @@ function _templateObject2() {
 }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n    <div>\n      ", "\n      <button onclick=", ">+</button>\n      <button onclick=", ">-</button>\n    </div> \n  "]);
+  var data = _taggedTemplateLiteral(["<", " count=", " />"]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -594,7 +617,8 @@ function counter() {
   var state = (0, _src.useState)({
     count: 0
   }, this);
-  return (0, _src.html)(_templateObject(), (0, _src.html)(_templateObject2(), count, state.count), function () {
+  (0, _h.h1)(_templateObject(), count, state.count);
+  return (0, _src.html)(_templateObject2(), (0, _src.html)(_templateObject3(), count, state.count), function () {
     state.count++;
   }, function () {
     state.count--;
@@ -605,13 +629,13 @@ function count(props) {
   var state = (0, _src.useState)({
     sex: 'boy'
   }, this);
-  return (0, _src.html)(_templateObject3(), props.count, state.sex, function () {
+  return (0, _src.html)(_templateObject4(), props.count, state.sex, function () {
     state.sex = state.sex === 'boy' ? 'girl' : 'boy';
   });
 }
 
-(0, _src.render)((0, _src.html)(_templateObject4(), counter), document.body);
-},{"./src":"src/index.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+(0, _src.render)((0, _src.html)(_templateObject5(), counter), document.body);
+},{"./src":"src/index.js","./src_mine/h":"src_mine/h.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -639,7 +663,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61456" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51637" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
