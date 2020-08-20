@@ -6,6 +6,7 @@ const reg = /(\$_h\[\d+\])/g
 
 export default function html(statics) {
   const tpl = CACHE[statics] || (CACHE[statics] = build(statics))
+  console.log('tpl', tpl,arguments)
   return tpl(this, arguments)
 }
 
@@ -22,6 +23,7 @@ function build(statics) {
     .replace(/<([\w:-]+)(?:\s[^<>]*?)?(\/?)>/g,(str, name, a) => str.replace(/(?:'.*?'|".*?"|([A-Z]))/g, (s, c) => (c ? ':::' + c : s)) + (a ? '</' + name + '>' : ''))
     .replace(/[\r\n]|\ \ +/g,'')
     .trim()
+  console.log('TEMPLATE', TEMPLATE.content)
 
   return Function('h','$_h','return ' + walk((TEMPLATE.content || TEMPLATE).firstChild))
 }
