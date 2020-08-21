@@ -429,16 +429,21 @@ function build(statics) {
       return c ? ':::' + c : s;
     }) + (a ? '</' + name + '>' : '');
   }).replace(/[\r\n]|\ \ +/g, '').trim();
-  console.log('TEMPLATE', TEMPLATE.content);
+  console.log('TEMPLATE', TEMPLATE, walk((TEMPLATE.content || TEMPLATE).firstChild));
   return Function('h', '$_h', 'return ' + walk((TEMPLATE.content || TEMPLATE).firstChild));
 }
 
 function walk(n) {
+  console.log('n', n, n.data);
+
   if (n.nodeType != 1) {
+    //当不是节点元素
+    //当是文本节点 并且有值
     if (n.nodeType == 3 && n.data) return field(n.data, ',');
     return 'null';
   }
 
+  console.log('localName', n.localName);
   var str = '',
       nodeName = field(n.localName, str),
       sub = '',
@@ -565,14 +570,9 @@ function html(statics) {
   var i = 1;
 
   while (i < statics.length) {
-    str += '$_h' + i + statics[i++];
+    str += '$_h[' + i + ']' + statics[i++];
   }
 
-  str.replace(/<(?:(\/)\/|(\/?)(\$_h\[\d+\]))/g, '<$1$2c c@=$3').replace(/<([\w:-]+)(?:\s[^<>]*?)?(\/?)>/g, function (str, name, a) {
-    return str.replace(/(?:'.*?'|".*?"|([A-Z]))/g, function (s, c) {
-      return c ? ':::' + c : s;
-    }) + (a ? '</' + name + '>' : '');
-  }).replace(/[\r\n]|\ \ +/g, '').trim();
   console.log('tag', str); // for(let i = 1; i <statics.length; ){
   //   str+= '$_h'+i + statics[i++]
   // }
@@ -620,6 +620,26 @@ var _src = require("./src");
 
 var _h = require("./src_mine/h");
 
+function _templateObject4() {
+  var data = _taggedTemplateLiteral(["<", " />"]);
+
+  _templateObject4 = function _templateObject4() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject3() {
+  var data = _taggedTemplateLiteral(["<", " />"]);
+
+  _templateObject3 = function _templateObject3() {
+    return data;
+  };
+
+  return data;
+}
+
 function _templateObject2() {
   var data = _taggedTemplateLiteral(["\n    <button onclick=", ">", "</button>\n  "]);
 
@@ -631,7 +651,7 @@ function _templateObject2() {
 }
 
 function _templateObject() {
-  var data = _taggedTemplateLiteral(["\n    <button onclick=", ">hello</button>\n  "]);
+  var data = _taggedTemplateLiteral(["\n    <div>123</div>\n  "]);
 
   _templateObject = function _templateObject() {
     return data;
@@ -667,19 +687,23 @@ function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(
 //   `
 // }
 function HelloWord() {
-  return (0, _src.html)(_templateObject(), function () {
-    console.log(123);
-  });
+  return (0, _src.html)(_templateObject());
+}
+
+{
+  /* <button onclick=${()=>{console.log(123)}}>hello</button> */
 }
 
 function HelloWord2() {
   return (0, _h.html1)(_templateObject2(), function () {
     console.log(123);
   }, 1 + 2);
-} // console.log(123,HelloWord())
+}
 
+console.log(123, HelloWord());
+console.log('h', (0, _src.html)(_templateObject3(), HelloWord)); // console.log('mine',HelloWord2())
 
-console.log('mine', HelloWord2()); // render(h`<${HelloWord} />`, document.body)
+(0, _src.render)((0, _src.html)(_templateObject4(), HelloWord), document.body);
 },{"./src":"src/index.js","./src_mine/h":"src_mine/h.js"}],"node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -708,7 +732,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61450" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58228" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

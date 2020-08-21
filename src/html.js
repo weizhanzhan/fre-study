@@ -23,17 +23,19 @@ function build(statics) {
     .replace(/<([\w:-]+)(?:\s[^<>]*?)?(\/?)>/g,(str, name, a) => str.replace(/(?:'.*?'|".*?"|([A-Z]))/g, (s, c) => (c ? ':::' + c : s)) + (a ? '</' + name + '>' : ''))
     .replace(/[\r\n]|\ \ +/g,'')
     .trim()
-  console.log('TEMPLATE', TEMPLATE.content)
+  console.log('TEMPLATE',TEMPLATE,walk((TEMPLATE.content || TEMPLATE).firstChild))
 
   return Function('h','$_h','return ' + walk((TEMPLATE.content || TEMPLATE).firstChild))
 }
 
 function walk(n) {
-  if (n.nodeType != 1) {
+  console.log('n', n,n.data)
+  if (n.nodeType != 1) {//当不是节点元素
+    //当是文本节点 并且有值
     if (n.nodeType == 3 && n.data) return field(n.data, ',')
     return 'null'
   }
-
+  console.log('localName', n.localName)
   let str = '',
     nodeName = field(n.localName, str),
     sub = '',

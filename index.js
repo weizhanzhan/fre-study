@@ -30,15 +30,16 @@ import { html1 as h1 } from './src_mine/h'
 
 function HelloWord(){
   return h`
-    <button onclick=${()=>{console.log(123)}}>hello</button>
+    <div>123</div>
   `
 }
-
+{/* <button onclick=${()=>{console.log(123)}}>hello</button> */}
 function HelloWord2(){
   return h1`
     <button onclick=${()=>{console.log(123)}}>${1+2}</button>
   `
 }
-// console.log(123,HelloWord())
-console.log('mine',HelloWord2())
-// render(h`<${HelloWord} />`, document.body)
+console.log(123,HelloWord())
+console.log('h', h`<${HelloWord} />`)
+// console.log('mine',HelloWord2())
+render(h`<${HelloWord} />`, document.body)
